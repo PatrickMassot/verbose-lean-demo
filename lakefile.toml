@@ -1,0 +1,11 @@
+name = "eindhoven"
+version = "0.1.0"
+defaultTargets = ["VerboseDemo"]
+
+[[lean_lib]]
+name = "VerboseDemo"
+
+[[require]]
+name = "verbose"
+git = "https://github.com/PatrickMassot/verbose-lean4.git"
+rev = "bump4.17"
