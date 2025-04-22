@@ -8,4 +8,3 @@ name = "VerboseDemo"
 [[require]]
 name = "verbose"
 git = "https://github.com/PatrickMassot/verbose-lean4.git"
-rev = "bump4.17"
