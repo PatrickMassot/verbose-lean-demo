@@ -78,6 +78,8 @@ QED
 
 -- Removing all references to assumption names
 
+useSinceSuggestionProviders
+
 Exercise "Continuity implies sequential continuity"
   Given: (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ)
   Assume: (hu : u converges to x₀) (hf : f is continuous at x₀)
