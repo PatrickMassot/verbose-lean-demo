@@ -21,8 +21,8 @@ example (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ)
   apply hN
   exact n_ge
 
--- Using controlled natural language but almost same level of help from Lean
--- (difference: specify what `intro` means)
+-- Using controlled natural language but almost same level of help
+-- from Lean (difference: specify what `intro` means)
 
 Exercise "Continuity implies sequential continuity"
   Given: (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ)
@@ -40,7 +40,8 @@ Proof:
 QED
 
 -- Now using controlled natural language and less help from computer
--- (no `We apply` without stating the new goal, and announce more intermediate goals).
+-- (no `We apply` without stating the new goal, and announce more
+-- intermediate goals).
 
 Exercise "Continuity implies sequential continuity"
   Given: (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ)
@@ -50,8 +51,9 @@ Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix ε > 0
   By hf applied to ε using ε_pos we get δ such that
-    (δ_pos : δ > 0) and (Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε)
-  By hu applied to δ using δ_pos we get N such that Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
+    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+  By hu applied to δ using δ_pos we get N such that
+    Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
   Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix n ≥ N
   By Hf applied to u n it suffices to prove |u n - x₀| ≤ δ
@@ -67,8 +69,9 @@ Exercise "Continuity implies sequential continuity"
 Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix ε > 0
-  By hf applied to ε using that ε > 0 we get δ such that -- Note “using that ε > 0”
-    (δ_pos : δ > 0) and (Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε)
+  -- Note “using that ε > 0” below
+  By hf applied to ε using that ε > 0 we get δ such that
+    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
   By hu applied to δ using that δ > 0 we get N such that Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
   Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix n ≥ N
@@ -88,15 +91,19 @@ Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix ε > 0
   Since f is continuous at x₀ and ε > 0 we get δ such that
-    (δ_pos : δ > 0) and (Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε)
-  Since u converges to x₀ and δ > 0 we get N such that Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
+    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+  Since u converges to x₀ and δ > 0 we get N such that
+    Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
   Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix n ≥ N
-  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε it suffices to prove that |u n - x₀| ≤ δ
-  Since ∀ n ≥ N, |u n - x₀| ≤ δ and n ≥ N we conclude that |u n - x₀| ≤ δ
+  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε it suffices to prove
+    that |u n - x₀| ≤ δ
+  Since ∀ n ≥ N, |u n - x₀| ≤ δ and n ≥ N we conclude
+    that |u n - x₀| ≤ δ
   /- -- Forward reasoning variation
   Since ∀ n ≥ N, |u n - x₀| ≤ δ and n ≥ N we get h : |u n - x₀| ≤ δ
-  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε and |u n - x₀| ≤ δ we conclude that |f (u n) - f x₀| ≤ ε -/
+  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε and |u n - x₀| ≤ δ
+    we conclude that |f (u n) - f x₀| ≤ ε -/
 QED
 
 -- In the previous examples, we can use the `help` tactic and the widgets
@@ -113,12 +120,16 @@ Example "The squeeze theorem."
 Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |v n - l| ≤ ε
   Fix ε > 0
-  Since u converges to l and ε > 0 we get N such that hN : ∀ n ≥ N, |u n - l| ≤ ε
-  Since w converges to l and ε > 0 we get N' such that hN' : ∀ n ≥ N', |w n - l| ≤ ε
+  Since u converges to l and ε > 0 we get N such that
+    hN : ∀ n ≥ N, |u n - l| ≤ ε
+  Since w converges to l and ε > 0 we get N' such that
+    hN' : ∀ n ≥ N', |w n - l| ≤ ε
   Let's prove that max N N' works : ∀ n ≥ max N N', |v n - l| ≤ ε
   Fix n ≥ max N N'
-  Since ∀ n ≥ N,  |u n - l| ≤ ε and n ≥ N  we get hNl  : |u n - l| ≤ ε
-  Since ∀ n ≥ N', |w n - l| ≤ ε and n ≥ N' we get hN'l : |w n - l| ≤ ε
+  Since ∀ n ≥ N,  |u n - l| ≤ ε and n ≥ N  we get
+    hNl  : |u n - l| ≤ ε
+  Since ∀ n ≥ N', |w n - l| ≤ ε and n ≥ N' we get
+    hN'l : |w n - l| ≤ ε
   Let's prove that |v n - l| ≤ ε
   Let's first prove that -ε ≤ v n - l
   Calc -ε ≤ u n - l since |u n - l| ≤ ε
@@ -153,9 +164,9 @@ QED
 
 /- Let’s see how to introduce ad hoc lemmas for students.
 
-Here we tell students that `v₂` is the function sending an integer to the
-exponent of 2 in it prime factors decomposition. There are only two facts
-needed about this function
+Here we tell students that `v₂` is the function sending an integer to
+the exponent of 2 in it prime factors decomposition. There are only
+two facts needed about this function
 
 `∀ p : ℤ, v₂ (p^2) is even`
 
