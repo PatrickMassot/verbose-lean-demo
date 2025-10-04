@@ -6,6 +6,16 @@ set_option linter.style.multiGoal false
 set_option linter.unnecessarySimpa false
 )
 
+open Lean PrettyPrinter Delaborator SubExpr in
+@[app_delab Max.max]
+def delabMax : Delab := do
+  let e ← getExpr
+  guard <| e.isAppOfArity ``Max.max 4
+  let m := mkIdent `max
+  let x ← withNaryArg 2 delab
+  let y ← withNaryArg 3 delab
+  `($(m) $(x) $(y))
+
 def continuous_function_at (f : ℝ → ℝ) (x₀ : ℝ) :=
 ∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε
 
