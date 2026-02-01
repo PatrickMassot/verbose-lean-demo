@@ -80,7 +80,7 @@ Proof:
 QED
 
 -- Removing all references to assumption names
-
+open Verbose.NameLess
 useSinceSuggestionProviders
 
 Exercise "Continuity implies sequential continuity"
@@ -91,9 +91,9 @@ Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix ε > 0
   Since f is continuous at x₀ and ε > 0 we get δ such that
-    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+    δ > 0 and ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
   Since u converges to x₀ and δ > 0 we get N such that
-    Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
+    ∀ n ≥ N, |u n - x₀| ≤ δ
   Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
   Fix n ≥ N
   Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε it suffices to prove
@@ -121,15 +121,15 @@ Proof:
   Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |v n - l| ≤ ε
   Fix ε > 0
   Since u converges to l and ε > 0 we get N such that
-    hN : ∀ n ≥ N, |u n - l| ≤ ε
+    ∀ n ≥ N, |u n - l| ≤ ε
   Since w converges to l and ε > 0 we get N' such that
-    hN' : ∀ n ≥ N', |w n - l| ≤ ε
+    ∀ n ≥ N', |w n - l| ≤ ε
   Let's prove that max N N' works : ∀ n ≥ max N N', |v n - l| ≤ ε
   Fix n ≥ max N N'
-  Since ∀ n ≥ N,  |u n - l| ≤ ε and n ≥ N  we get
-    hNl  : |u n - l| ≤ ε
-  Since ∀ n ≥ N', |w n - l| ≤ ε and n ≥ N' we get
-    hN'l : |w n - l| ≤ ε
+  Since ∀ n ≥ N,  |u n - l| ≤ ε and n ≥ N  we get that
+    |u n - l| ≤ ε
+  Since ∀ n ≥ N', |w n - l| ≤ ε and n ≥ N' we get that
+    |w n - l| ≤ ε
   Let's prove that |v n - l| ≤ ε
   Let's first prove that -ε ≤ v n - l
   Calc -ε ≤ u n - l since |u n - l| ≤ ε
@@ -149,14 +149,14 @@ Proof:
   Let's first prove that n ^ 2 is even ⇒ n is even
   · Let's prove the contrapositive: ¬n is even ⇒ ¬n ^ 2 is even
     It suffices to prove that n is odd ⇒ n^2 is odd
-    Assume hyp : n is odd
-    Since n is odd we get k such that hk : n = 2 * k + 1
+    Assume that n is odd
+    Since n is odd we get k such that n = 2 * k + 1
     Since n = 2 * k + 1 it suffices to prove that (2 * k + 1)^2 is odd
     Let's prove that 2*k*(k+1) works
     We compute
   Let's now prove that n is even ⇒ n ^ 2 is even
-  · Assume hyp : n is even
-    Since n is even we get k such that hk : n = 2 * k
+  · Assume that n is even
+    Since n is even we get k such that n = 2 * k
     Since n = 2 * k it suffices to prove that (2 * k)^2 is even
     Let's prove that 2*k^2 works
     We compute
@@ -182,12 +182,12 @@ Exercise "Irrationality of √2"
   Assume: (hq : q ≠ 0)
   Conclusion: p^2 ≠ 2*q^2
 Proof:
-  Assume H : p^2 = 2 * q^2
+  Assume that p^2 = 2 * q^2
   Let's prove that False
   Since v₂ (p^2) is even it suffices to prove that v₂ (p^2) is odd
-  Since v₂ (q^2) is even we get k such that hk : v₂ (q^2) = 2*k
+  Since v₂ (q^2) is even we get k such that v₂ (q^2) = 2*k
   Let's prove that k works: v₂ (p^2) = 2*k + 1
-  Since q ≠ 0 we get hq' : q^2 ≠ 0
+  Since q ≠ 0 we get that q^2 ≠ 0
   Calc
     v₂ (p ^ 2) = v₂ (2*q^2)   since p^2 = 2*q^2
     _          = v₂ (q^2) + 1 since q^2 ≠ 0
@@ -201,14 +201,14 @@ Exercise "Irrationality of √2"
   Assume: (hq : q ≠ 0)
   Conclusion: p^2 ≠ 2*q^2
 Proof:
-  Assume H : p^2 = 2 * q^2
+  Assume that p^2 = 2 * q^2
   Let's prove that False
-  Since q ≠ 0 we get h₁ : q^2 ≠ 0
-  Fact h₁ : v₂ (p^2) = v₂ (q^2) + 1 by Calc
+  Since q ≠ 0 we get that q^2 ≠ 0
+  Fact: v₂ (p^2) = v₂ (q^2) + 1 by Calc
     v₂ (p ^ 2) = v₂ (2*q^2)    since p^2 = 2*q^2
     _          = v₂ (q^2) + 1  since q^2 ≠ 0
-  Since v₂ (q^2) is even we get h₂ : v₂ (q^2) + 1 is odd
+  Since v₂ (q^2) is even we get that v₂ (q^2) + 1 is odd
   Since v₂ (p^2) = v₂ (q^2) + 1 and v₂ (q^2) + 1 is odd
-    we get  h₃ : v₂ (p^2) is odd
+    we get that v₂ (p^2) is odd
   Since v₂ (p^2) is even and v₂ (p^2) is odd we conclude that False
 QED

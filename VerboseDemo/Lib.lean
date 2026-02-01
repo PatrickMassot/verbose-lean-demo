@@ -92,7 +92,7 @@ lemma pair_succ_impair (n : ℤ) (h : n is odd) : (n + 1) is even := by
 
 open Verbose.English
 
-lemma le_of_abs_le' {α : Type*} [LinearOrderedAddCommGroup α] {x y : α} : |x| ≤ y → -y ≤ x := fun h ↦ abs_le.1 h |>.1
+lemma le_of_abs_le' {α : Type*}  [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {x y : α} : |x| ≤ y → -y ≤ x := fun h ↦ abs_le.1 h |>.1
 
 /-- Multiplicité de `2` dans la décomposition en produit de facteurs premiers d’un entier -/
 axiom v₂ : ℤ → ℤ
