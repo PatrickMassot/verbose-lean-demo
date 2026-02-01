@@ -1,4 +1,7 @@
 import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Algebra.Order.Floor.Defs
+import Mathlib.Data.Real.Archimedean
+
 import Verbose.English.All
 
 macro "setup_env" : command => `(set_option linter.unusedTactic false
@@ -106,13 +109,16 @@ lemma lt_lt_of_abs_lt {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrdered
 lemma lt_of_abs_lt' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
   {a b : α} (h : |a| < b) : -b < a := (abs_lt.1 h).1
 
+lemma lt_of_abs_lt'' {a b c : ℝ} (h : |a| < b/c) : -b/c < a := by grind [abs_lt]
+
 configureAnonymousFactSplittingLemmas
   le_le_of_abs_le le_le_of_max_le le_of_max_le_left le_of_max_le_right
   le_of_abs_le le_of_abs_le'
-  lt_of_abs_lt lt_of_abs_lt'
+  lt_of_abs_lt lt_of_abs_lt' lt_of_abs_lt''
   non_pair_impair pair_car_non_impair impair_car_non_pair non_pair_car_impair non_impair_car_pair
   pair_succ_impair impair_succ_pair
   v₂_square v₂_two_mul pow_ne_zero lt_lt_of_abs_lt
+  lt_trans
 
 lemma abs_lt_of_lt_lt {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
     (h : -b < a) (h' : a < b) : |a| < b := abs_lt.2 ⟨h, h'⟩
@@ -130,3 +136,52 @@ useDefaultSuggestionProviders
 configureUnfoldableDefs continuous_fun_at seq_tendsto pair impair
 
 configureHelpProviders SinceHypHelp SinceGoalHelp helpByContradictionGoal helpShowContrapositiveGoal
+
+configureAnonymousCaseSplittingLemmas le_or_gt lt_or_gt_of_ne lt_or_eq_of_le eq_or_lt_of_le eq_zero_or_eq_zero_of_mul_eq_zero Classical.em le_total
+
+axiom abs_mul_nat (n : ℕ) (x : ℝ) : |(OfNat.ofNat n : ℝ)*x| = (OfNat.ofNat n : ℝ) *|x|
+
+
+addAnonymousComputeLemma abs_mul_nat
+addAnonymousComputeLemma abs_mul
+
+macro_rules | `($x / $y)   => `(HDiv.hDiv ($x : ℝ) ($y : ℝ))
+
+macro "seq " i:ident " ↦ " y:term : term => `(fun ($i : ℕ) ↦ ($y : ℝ))
+
+axiom stupid_arch {A : ℝ} : ∃ N : Nat, N ≥ A
+
+axiom A {ε a : ℝ} (h : ε > 0) (h' : a ≥ 1/ε) : ε ≥ 1/a
+axiom A' {ε a : ℝ} (h : ε > 0) (h' : a > 1/ε) : ε > 1/a
+
+lemma B {a b : ℕ} (ha : 0 < a) (h : a ≤ b) : 1/b ≤ 1/a := by
+  apply one_div_le_one_div_of_le <;> assumption_mod_cast
+
+lemma C {a b : ℕ} (ha : 0 < a) (h : a < b) : 1/b < 1/a := by
+  apply one_div_lt_one_div_of_lt <;> assumption_mod_cast
+
+lemma one_div_pos_of_pos {ε : ℝ} (h : ε > 0) : 1/ε > 0 :=
+  one_div_pos.mpr h
+
+
+addAnonymousFactSplittingLemma stupid_arch
+addAnonymousFactSplittingLemma A
+addAnonymousFactSplittingLemma A'
+addAnonymousFactSplittingLemma B
+addAnonymousFactSplittingLemma one_div_pos_of_pos
+addAnonymousFactSplittingLemma lt_of_lt_of_le
+addAnonymousFactSplittingLemma lt_of_abs_lt
+
+
+addAnonymousFactSplittingLemma Nat.le_ceil
+addAnonymousComputeLemma Nat.le_ceil
+
+lemma le_of_abs_le'' {a b c : ℝ} (h : |a| ≤ b/c) : -b/c ≤ a := by
+  grind
+
+addAnonymousFactSplittingLemma le_of_abs_le''
+addAnonymousCaseSplittingLemma  Nat.le_or_eq_of_le_succ
+lemma barbaz (x y : ℝ) : |x| ≤ |x - y| + |y| := by grind
+
+addAnonymousComputeLemma barbaz
+
