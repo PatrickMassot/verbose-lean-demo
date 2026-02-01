@@ -48,15 +48,15 @@ Exercise "Continuity implies sequential continuity"
   Assume: (hu : u converges to x₀) (hf : f is continuous at x₀)
   Conclusion: (f ∘ u) converges to f x₀
 Proof:
-  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix ε > 0
   By hf applied to ε using ε_pos we get δ such that
-    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| < δ ⇒ |f x - f x₀| < ε
   By hu applied to δ using δ_pos we get N such that
-    Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
-  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+    Hu : ∀ n ≥ N, |u n - x₀| < δ
+  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix n ≥ N
-  By Hf applied to u n it suffices to prove |u n - x₀| ≤ δ
+  By Hf applied to u n it suffices to prove |u n - x₀| < δ
   We conclude by Hu applied to n using n_ge
 QED
 
@@ -67,15 +67,15 @@ Exercise "Continuity implies sequential continuity"
   Assume: (hu : u converges to x₀) (hf : f is continuous at x₀)
   Conclusion: (f ∘ u) converges to f x₀
 Proof:
-  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix ε > 0
   -- Note “using that ε > 0” below
   By hf applied to ε using that ε > 0 we get δ such that
-    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
-  By hu applied to δ using that δ > 0 we get N such that Hu : ∀ n ≥ N, |u n - x₀| ≤ δ
-  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+    δ_pos : δ > 0 and Hf : ∀ x, |x - x₀| < δ ⇒ |f x - f x₀| < ε
+  By hu applied to δ using that δ > 0 we get N such that Hu : ∀ n ≥ N, |u n - x₀| < δ
+  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix n ≥ N
-  By Hf applied to u n it suffices to prove |u n - x₀| ≤ δ
+  By Hf applied to u n it suffices to prove |u n - x₀| < δ
   We conclude by Hu applied to n using that n ≥ N
 QED
 
@@ -88,22 +88,22 @@ Exercise "Continuity implies sequential continuity"
   Assume: (hu : u converges to x₀) (hf : f is continuous at x₀)
   Conclusion: (f ∘ u) converges to f x₀
 Proof:
-  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix ε > 0
   Since f is continuous at x₀ and ε > 0 we get δ such that
-    δ > 0 and ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+    δ > 0 and ∀ x, |x - x₀| < δ ⇒ |f x - f x₀| < ε
   Since u converges to x₀ and δ > 0 we get N such that
-    ∀ n ≥ N, |u n - x₀| ≤ δ
-  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| ≤ ε
+    ∀ n ≥ N, |u n - x₀| < δ
+  Let's prove that N works : ∀ n ≥ N, |f (u n) - f x₀| < ε
   Fix n ≥ N
-  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε it suffices to prove
-    that |u n - x₀| ≤ δ
-  Since ∀ n ≥ N, |u n - x₀| ≤ δ and n ≥ N we conclude
-    that |u n - x₀| ≤ δ
+  Since ∀ x, |x - x₀| < δ → |f x - f x₀| < ε it suffices to prove
+    that |u n - x₀| < δ
+  Since ∀ n ≥ N, |u n - x₀| < δ and n ≥ N we conclude
+    that |u n - x₀| < δ
   /- -- Forward reasoning variation
-  Since ∀ n ≥ N, |u n - x₀| ≤ δ and n ≥ N we get h : |u n - x₀| ≤ δ
-  Since ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε and |u n - x₀| ≤ δ
-    we conclude that |f (u n) - f x₀| ≤ ε -/
+  Since ∀ n ≥ N, |u n - x₀| < δ and n ≥ N we get h : |u n - x₀| < δ
+  Since ∀ x, |x - x₀| < δ → |f x - f x₀| < ε and |u n - x₀| < δ
+    we conclude that |f (u n) - f x₀| < ε -/
 QED
 
 -- In the previous examples, we can use the `help` tactic and the widgets
@@ -118,25 +118,25 @@ Example "The squeeze theorem."
     (h' : ∀ n, v n ≤ w n)
   Conclusion: v converges to l
 Proof:
-  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |v n - l| ≤ ε
+  Let's prove that ∀ ε > 0, ∃ N, ∀ n ≥ N, |v n - l| < ε
   Fix ε > 0
   Since u converges to l and ε > 0 we get N such that
-    ∀ n ≥ N, |u n - l| ≤ ε
+    ∀ n ≥ N, |u n - l| < ε
   Since w converges to l and ε > 0 we get N' such that
-    ∀ n ≥ N', |w n - l| ≤ ε
-  Let's prove that max N N' works : ∀ n ≥ max N N', |v n - l| ≤ ε
+    ∀ n ≥ N', |w n - l| < ε
+  Let's prove that max N N' works : ∀ n ≥ max N N', |v n - l| < ε
   Fix n ≥ max N N'
-  Since ∀ n ≥ N,  |u n - l| ≤ ε and n ≥ N  we get that
-    |u n - l| ≤ ε
-  Since ∀ n ≥ N', |w n - l| ≤ ε and n ≥ N' we get that
-    |w n - l| ≤ ε
-  Let's prove that |v n - l| ≤ ε
-  Let's first prove that -ε ≤ v n - l
-  Calc -ε ≤ u n - l since |u n - l| ≤ ε
+  Since ∀ n ≥ N,  |u n - l| < ε and n ≥ N  we get that
+    |u n - l| < ε
+  Since ∀ n ≥ N', |w n - l| < ε and n ≥ N' we get that
+    |w n - l| < ε
+  Let's prove that |v n - l| < ε
+  Let's first prove that -ε < v n - l
+  Calc -ε < u n - l since |u n - l| < ε
        _  ≤ v n - l since u n ≤ v n
-  Let's now prove that v n - l ≤ ε
+  Let's now prove that v n - l < ε
   Calc v n - l ≤ w n - l  since v n ≤ w n
-       _       ≤ ε        since |w n - l| ≤ ε
+       _       < ε        since |w n - l| < ε
 QED
 
 -- An exmple with contrapositive, and some lemmas about even and odd numbers

@@ -17,16 +17,16 @@ def delabMax : Delab := do
   `($(m) $(x) $(y))
 
 def continuous_function_at (f : ℝ → ℝ) (x₀ : ℝ) :=
-∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε
+∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| < δ → |f x - f x₀| < ε
 
 def sequence_tendsto (u : ℕ → ℝ) (l : ℝ) :=
-∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
+∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| < ε
 
 def continuous_fun_at (f : ℝ → ℝ) (x₀ : ℝ) :=
-∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε
+∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| < δ → |f x - f x₀| < ε
 
 def seq_tendsto (u : ℕ → ℝ) (l : ℝ) :=
-∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
+∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| < ε
 
 notation:50 f:80 " is continuous at " x₀ => continuous_fun_at f x₀
 notation:50 u:80 " converges to " l => seq_tendsto u l
@@ -101,14 +101,27 @@ axiom v₂_square (p : ℤ) : v₂ (p^2) is even
 
 axiom v₂_two_mul (p : ℤ) (hp : p ≠ 0) : v₂ (2*p) = v₂ p + 1
 
+lemma lt_lt_of_abs_lt {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α} : |a| < b → -b < a ∧ a < b := abs_lt.1
+
+lemma lt_of_abs_lt' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
+  {a b : α} (h : |a| < b) : -b < a := (abs_lt.1 h).1
+
 configureAnonymousFactSplittingLemmas
   le_le_of_abs_le le_le_of_max_le le_of_max_le_left le_of_max_le_right
   le_of_abs_le le_of_abs_le'
+  lt_of_abs_lt lt_of_abs_lt'
   non_pair_impair pair_car_non_impair impair_car_non_pair non_pair_car_impair non_impair_car_pair
   pair_succ_impair impair_succ_pair
-  v₂_square v₂_two_mul pow_ne_zero
+  v₂_square v₂_two_mul pow_ne_zero lt_lt_of_abs_lt
 
-configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm
+lemma abs_lt_of_lt_lt {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
+    (h : -b < a) (h' : a < b) : |a| < b := abs_lt.2 ⟨h, h'⟩
+
+lemma abs_lt_of_lt_lt' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
+    (h' : a < b) (h : -b < a) : |a| < b := abs_lt.2 ⟨h, h'⟩
+
+configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm abs_lt_of_lt_lt
+abs_lt_of_lt_lt'
 
 useDefaultDataProviders
 
